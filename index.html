@@ -7,18 +7,20 @@
 <title>컬러 소트</title>
 <style>
   :root {
-    --bg1: #5b3fe0;
-    --bg2: #3a1f9e;
+    --bg1: #6a4cf0;
+    --bg2: #2c1580;
     --panel: #ffffff;
     --ink: #2a1a6e;
     --accent: #ffcf3f;
     --accent-ink: #4a2a00;
-    --glass: rgba(255, 255, 255, 0.8);
+    --rim: rgba(255, 255, 255, 0.85);
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin: 0; height: 100%; }
   body {
-    background: radial-gradient(circle at 50% 20%, var(--bg1), var(--bg2));
+    background:
+      radial-gradient(ellipse at 50% 115%, rgba(0,0,0,.35), transparent 60%),
+      radial-gradient(circle at 50% 18%, var(--bg1), var(--bg2) 75%);
     color: #fff;
     font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
     overflow: hidden;
@@ -33,71 +35,111 @@
   /* ---------- 메뉴 ---------- */
   #menu { justify-content: center; gap: 14px; padding: 24px 16px; }
   .logo { font-size: 46px; font-weight: 900; letter-spacing: -1px; line-height: 1; text-align: center;
-    text-shadow: 0 4px 0 #2a1278, 0 8px 24px rgba(0,0,0,.3); }
-  .logo span { display: block; font-size: 22px; color: var(--accent); margin-top: 6px; letter-spacing: 2px; }
-  .menu-bottles { display: flex; gap: 10px; margin: 18px 0 22px; }
-  .menu-bottles .bottle { pointer-events: none; }
+    text-shadow: 0 2px 0 #c9b8ff, 0 4px 0 #3b1d9c, 0 6px 0 #2a1278, 0 12px 24px rgba(0,0,0,.35); }
+  .logo span { display: block; font-size: 22px; color: var(--accent); margin-top: 8px; letter-spacing: 2px;
+    text-shadow: 0 3px 0 #a86a00, 0 6px 12px rgba(0,0,0,.3); }
+  .menu-bottles { display: flex; align-items: flex-end; gap: 14px; margin: 26px 0 26px; }
+  .menu-bottles .bottle { pointer-events: none; margin: 0; }
   .big-btn { width: min(300px, 100%); padding: 16px 20px; border-radius: 18px; font-size: 20px; font-weight: 800;
-    background: var(--panel); color: var(--ink); box-shadow: 0 5px 0 rgba(0,0,0,.25); transition: transform .08s; }
-  .big-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,.25); }
-  .big-btn.primary { background: var(--accent); color: var(--accent-ink); font-size: 22px; }
+    background: linear-gradient(#fff, #e9e4ff); color: var(--ink); box-shadow: 0 5px 0 #b3a6e8, 0 10px 18px rgba(0,0,0,.25);
+    transition: transform .08s; }
+  .big-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #b3a6e8, 0 4px 8px rgba(0,0,0,.25); }
+  .big-btn.primary { background: linear-gradient(#ffe27a, #ffbf1f); color: var(--accent-ink); font-size: 22px;
+    box-shadow: 0 5px 0 #c98a00, 0 10px 18px rgba(0,0,0,.25); }
+  .big-btn.primary:active { box-shadow: 0 2px 0 #c98a00, 0 4px 8px rgba(0,0,0,.25); }
   .menu-hint { font-size: 14px; opacity: .85; margin-top: 6px; text-align: center; }
 
   /* ---------- 게임 화면 ---------- */
   #game { padding: calc(env(safe-area-inset-top) + 12px) 16px calc(env(safe-area-inset-bottom) + 16px); }
   .hud { width: 100%; max-width: 520px; display: flex; align-items: center; justify-content: space-between; }
   .hud-title { text-align: center; }
-  .hud-title b { display: block; font-size: 24px; font-weight: 900; }
+  .hud-title b { display: block; font-size: 24px; font-weight: 900; text-shadow: 0 3px 0 #2a1278; }
   .hud-title small { font-size: 13px; opacity: .8; }
-  .icon-btn { width: 48px; height: 48px; border-radius: 14px; background: rgba(255,255,255,.18); color: #fff; font-size: 22px;
-    display: grid; place-items: center; }
-  .icon-btn:active { background: rgba(255,255,255,.3); }
-  #board { flex: 1; width: 100%; display: flex; flex-wrap: wrap; justify-content: center; align-content: center;
+  .icon-btn { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(rgba(255,255,255,.28), rgba(255,255,255,.12));
+    color: #fff; font-size: 22px; display: grid; place-items: center; box-shadow: 0 4px 0 rgba(0,0,0,.2); }
+  .icon-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,.2); }
+  #board { flex: 1; width: 100%; display: flex; flex-wrap: wrap; justify-content: center; align-content: center; align-items: flex-end;
     margin: 0 auto; }
   .tools { display: flex; gap: 12px; }
-  .tool { min-width: 92px; padding: 10px 12px; border-radius: 16px; background: var(--panel); color: var(--ink);
-    font-weight: 800; font-size: 15px; box-shadow: 0 4px 0 rgba(0,0,0,.25); display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .tool { min-width: 92px; padding: 10px 12px; border-radius: 16px; background: linear-gradient(#fff, #e9e4ff); color: var(--ink);
+    font-weight: 800; font-size: 15px; box-shadow: 0 4px 0 #b3a6e8, 0 8px 14px rgba(0,0,0,.25);
+    display: flex; flex-direction: column; align-items: center; gap: 2px; }
   .tool span { font-size: 22px; line-height: 1; }
-  .tool:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,.25); }
+  .tool:active { transform: translateY(2px); box-shadow: 0 2px 0 #b3a6e8, 0 4px 8px rgba(0,0,0,.25); }
   .tool:disabled { opacity: .45; }
 
-  /* ---------- 병 ---------- */
-  .bottle { position: relative; width: var(--bw); height: var(--bh); margin: 0 calc(var(--gap) / 2) var(--rowgap);
-    transition: transform .15s ease-out; cursor: pointer; }
+  /* ---------- 3D 병 ---------- */
+  .bottle { --cap: 4; position: relative; width: var(--bw); height: calc(var(--bh) * (0.16 + 0.21 * var(--cap)));
+    margin: calc(var(--bw) * 0.3) calc(var(--gap) / 2) var(--rowgap); transition: transform .15s ease-out; cursor: pointer; }
   .bottle.sel { transform: translateY(-18px); }
-  .glass { position: absolute; inset: 0; border: 3px solid var(--glass); border-top-width: 0;
-    border-radius: 4px 4px calc(var(--bw) / 2) calc(var(--bw) / 2); overflow: hidden;
-    background: rgba(255,255,255,.08); }
-  .glass::before { content: ""; position: absolute; top: -3px; left: -7px; right: -7px; height: 8px; border-radius: 4px;
-    background: var(--glass); z-index: 2; }
-  .glass::after { content: ""; position: absolute; top: 12%; left: 14%; width: 14%; height: 62%; border-radius: 10px;
-    background: rgba(255,255,255,.28); z-index: 2; }
-  .liquid { position: absolute; left: 0; right: 0; bottom: 0; height: 84%; display: flex; flex-direction: column-reverse; }
-  .seg { height: 25%; flex: none; background-image: linear-gradient(90deg, rgba(255,255,255,.18), rgba(255,255,255,0) 45%, rgba(0,0,0,.14)); }
+  /* 바닥 그림자 */
+  .bottle::after { content: ""; position: absolute; left: -12%; right: -12%; bottom: calc(var(--bw) * -0.14);
+    height: calc(var(--bw) * 0.28); border-radius: 50%; z-index: -1;
+    background: radial-gradient(closest-side, rgba(10,0,40,.55), rgba(10,0,40,0)); transition: opacity .15s; }
+  .bottle.sel::after { opacity: .45; transform: translateY(18px) scale(.85); }
+  .glass { position: absolute; inset: 0; border: 2px solid rgba(255,255,255,.6); border-top: 0;
+    border-radius: 0 0 calc(var(--bw) / 2) calc(var(--bw) / 2); overflow: hidden;
+    background: linear-gradient(90deg, rgba(255,255,255,.24), rgba(255,255,255,.07) 28%, rgba(255,255,255,.03) 62%, rgba(255,255,255,.18));
+    box-shadow: inset 5px 0 8px rgba(255,255,255,.12), inset -6px 0 10px rgba(0,0,0,.22); }
+  /* 유리 반사광 */
+  .glass::after { content: ""; position: absolute; top: 8%; bottom: 10%; left: 16%; width: 13%; border-radius: 99px; z-index: 3;
+    background: linear-gradient(rgba(255,255,255,.7), rgba(255,255,255,.15) 70%, rgba(255,255,255,0)); }
+  .glass::before { content: ""; position: absolute; top: 14%; bottom: 22%; right: 14%; width: 6%; border-radius: 99px; z-index: 3;
+    background: rgba(255,255,255,.22); }
+  /* 병 입구 (타원) */
+  .rim { position: absolute; left: -4px; right: -4px; top: calc(var(--bw) * -0.13); height: calc(var(--bw) * 0.26);
+    border-radius: 50%; border: 3px solid var(--rim); z-index: 4;
+    background: radial-gradient(ellipse at 50% 60%, rgba(20,0,60,.35), rgba(255,255,255,.08));
+    box-shadow: 0 2px 3px rgba(0,0,0,.2); }
+  .liquid { position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--bh) * 0.21 * var(--cap));
+    display: flex; flex-direction: column-reverse; }
+  /* 원통처럼 보이도록 좌우 음영 */
+  .seg { position: relative; height: calc(100% / var(--cap)); flex: none; background-color: var(--c);
+    background-image: linear-gradient(90deg, rgba(0,0,0,.32), rgba(255,255,255,.32) 22%, rgba(255,255,255,0) 45%, rgba(0,0,0,.18) 80%, rgba(0,0,0,.38)); }
+  /* 색 경계를 곡면으로 */
+  .seg:not(:first-child)::after { content: ""; position: absolute; left: 0; right: 0; bottom: calc(var(--bw) * -0.12);
+    height: calc(var(--bw) * 0.24); border-radius: 50%; background: inherit; }
+  /* 맨 위 수면 */
+  .seg:last-child::before { content: ""; position: absolute; left: 0; right: 0; top: calc(var(--bw) * -0.12); z-index: 1;
+    height: calc(var(--bw) * 0.24); border-radius: 50%;
+    background: radial-gradient(ellipse at 40% 40%, color-mix(in srgb, var(--c) 45%, #fff), color-mix(in srgb, var(--c) 80%, #fff));
+    box-shadow: inset 0 -2px 3px rgba(0,0,0,.18); }
   .seg.grow { animation: grow .35s ease-out; transform-origin: bottom; }
   @keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-  .cork { position: absolute; left: 50%; top: -14px; width: 70%; height: 16px; transform: translateX(-50%) scale(0);
-    background: linear-gradient(#e0a060, #a8642c); border-radius: 4px 4px 2px 2px; z-index: 3; transition: transform .3s cubic-bezier(.3,1.6,.5,1); }
+  .cork { position: absolute; left: 50%; top: calc(var(--bw) * -0.36); width: 72%; height: calc(var(--bw) * 0.42);
+    transform: translateX(-50%) scale(0); z-index: 5; border-radius: 30% 30% 12% 12% / 40% 40% 12% 12%;
+    background: linear-gradient(90deg, #8a4e1e, #e6a868 30%, #c98446 60%, #7a4216);
+    box-shadow: inset 0 calc(var(--bw) * 0.07) 0 rgba(255,220,170,.55), 0 3px 4px rgba(0,0,0,.3);
+    transition: transform .3s cubic-bezier(.3,1.6,.5,1); }
   .bottle.done .cork { transform: translateX(-50%) scale(1); }
-  .bottle.done .glass { box-shadow: 0 0 18px rgba(255,255,255,.55); }
-  .stream { position: fixed; width: 7px; border-radius: 4px; z-index: 5; transform-origin: top; pointer-events: none; }
+  .bottle.done .glass { box-shadow: inset 5px 0 8px rgba(255,255,255,.12), inset -6px 0 10px rgba(0,0,0,.22), 0 0 18px rgba(255,255,255,.55); }
+  /* 긴 막대 */
+  .bottle.long .glass { border-color: rgba(255,240,180,.75); }
+  .bottle.long .rim { border-color: rgba(255,236,160,.95); }
+  .stream { position: fixed; width: 7px; border-radius: 4px; z-index: 5; transform-origin: top; pointer-events: none;
+    background-image: linear-gradient(90deg, rgba(0,0,0,.25), rgba(255,255,255,.35), rgba(0,0,0,.2)); }
 
   /* ---------- 오버레이 / 모달 ---------- */
   .overlay { position: fixed; inset: 0; background: rgba(20,8,60,.6); display: none; align-items: center; justify-content: center;
     padding: 16px; z-index: 50; }
   .overlay.on { display: flex; }
   .card { width: min(420px, 100%); max-height: 88vh; overflow-y: auto; background: var(--panel); color: var(--ink);
-    border-radius: 24px; padding: 24px 20px; box-shadow: 0 16px 40px rgba(0,0,0,.35); animation: pop .25s ease-out; }
+    border-radius: 24px; padding: 24px 20px; box-shadow: 0 8px 0 #b3a6e8, 0 20px 40px rgba(0,0,0,.35); animation: pop .25s ease-out; }
   @keyframes pop { from { transform: scale(.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
   .card h2 { margin: 0 0 12px; font-size: 24px; text-align: center; }
   .card h3 { margin: 18px 0 6px; font-size: 17px; color: #5b3fe0; }
   .card p, .card li { font-size: 15px; line-height: 1.6; margin: 0; }
   .card ul, .card ol { padding-left: 20px; margin: 0; }
   .card .row { display: flex; gap: 10px; margin-top: 20px; }
-  .card .row button { flex: 1; padding: 14px; border-radius: 14px; font-weight: 800; font-size: 16px; background: #ece8ff; color: var(--ink); }
-  .card .row button.primary { background: var(--accent); color: var(--accent-ink); }
+  .card .row button { flex: 1; padding: 14px; border-radius: 14px; font-weight: 800; font-size: 16px; background: #ece8ff; color: var(--ink);
+    box-shadow: 0 4px 0 #c9c0f0; }
+  .card .row button.primary { background: var(--accent); color: var(--accent-ink); box-shadow: 0 4px 0 #c98a00; }
+  .card .row button:active { transform: translateY(2px); box-shadow: none; }
   .win-emoji { font-size: 56px; text-align: center; }
   .win-sub { text-align: center; opacity: .7; }
+  .info-art { display: flex; justify-content: center; align-items: flex-end; gap: 14px; margin: 18px 0 14px;
+    padding: 16px 0 10px; border-radius: 16px; background: radial-gradient(circle at 50% 30%, var(--bg1), var(--bg2)); }
+  .info-art .bottle { margin: 0; pointer-events: none; }
 
   .toast { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 110px); transform: translateX(-50%);
     background: rgba(0,0,0,.75); color: #fff; padding: 10px 16px; border-radius: 12px; font-size: 14px; max-width: calc(100% - 32px);
@@ -106,7 +148,7 @@
 
   /* ---------- 튜토리얼 ---------- */
   .tut-bubble { width: 100%; max-width: 420px; background: var(--panel); color: var(--ink); border-radius: 18px; padding: 14px 16px;
-    font-size: 16px; font-weight: 700; line-height: 1.5; white-space: pre-line; text-align: center; box-shadow: 0 6px 0 rgba(0,0,0,.2);
+    font-size: 16px; font-weight: 700; line-height: 1.5; white-space: pre-line; text-align: center; box-shadow: 0 6px 0 #b3a6e8;
     margin-top: 12px; display: none; }
   .tut-bubble.on { display: block; }
   #hand { position: fixed; font-size: 40px; z-index: 40; pointer-events: none; display: none;
@@ -165,6 +207,13 @@
       <li>병 하나에는 최대 4칸까지 들어가요.</li>
       <li>같은 색이 여러 칸 이어져 있으면, 들어갈 수 있는 만큼 한꺼번에 부어져요.</li>
     </ul>
+    <h3>🧪 긴 막대 (레벨 10부터)</h3>
+    <ul>
+      <li>일반 병의 2배인 <b>8칸</b>까지 담을 수 있는 금빛 테두리 병이에요.</li>
+      <li>규칙은 똑같아요. 비어 있거나 맨 위가 같은 색일 때만 부을 수 있어요.</li>
+      <li>여러 색을 잠시 쌓아 두는 <b>창고</b>로 쓰면 좋아요.</li>
+      <li>대신 레벨 10부터는 처음에 주는 빈 병이 1개로 줄어요.</li>
+    </ul>
     <h3>🧰 도구</h3>
     <ul>
       <li><b>↶ 되돌리기</b> – 방금 한 이동을 취소해요. (횟수 제한 없음)</li>
@@ -184,6 +233,23 @@
   </div>
 </div>
 
+<!-- 긴 막대 소개 -->
+<div class="overlay" id="longOverlay">
+  <div class="card">
+    <h2>🧪 새로운 병 등장!</h2>
+    <div class="info-art" id="longArt"></div>
+    <p>레벨 10부터 <b>긴 막대</b>가 나와요.</p>
+    <ul style="margin-top:8px">
+      <li>일반 병의 2배인 <b>8칸</b>까지 담을 수 있어요.</li>
+      <li>규칙은 같아요. 비어 있거나 맨 위가 같은 색일 때만 부을 수 있어요.</li>
+      <li>대신 처음에 주는 빈 병은 1개로 줄어요.</li>
+    </ul>
+    <div class="row">
+      <button class="primary" id="longOk">알겠어요!</button>
+    </div>
+  </div>
+</div>
+
 <!-- 레벨 클리어 -->
 <div class="overlay" id="winOverlay">
   <div class="card">
@@ -199,6 +265,8 @@
 
 <script>
 const CAP = 4;
+const LONG_CAP = 8;
+const LONG_FROM = 10;   // 긴 막대가 나오는 레벨
 const COLORS = ['#ff3b5c', '#ff9f1c', '#ffe14d', '#7ae13a', '#14995a', '#35d0f5',
                 '#2f6bff', '#9b4dff', '#ff7ad9', '#a0612b', '#c9ced8', '#0f7c80'];
 const RED = 0, BLUE = 6;
@@ -208,7 +276,8 @@ const S = {
   mode: 'game',      // 'game' | 'tut'
   level: 1,
   bottles: [],
-  initial: [],
+  caps: [],          // 병마다 담을 수 있는 칸 수
+  initial: null,     // { bottles, caps }
   history: [],
   sel: -1,
   busy: false,
@@ -231,21 +300,27 @@ function topRun(b) {
   while (k < b.length && b[b.length - 1 - k] === topColor(b)) k++;
   return k;
 }
-const isFull = b => b.length === CAP && b.every(c => c === b[0]);
-function canPour(bs, i, j) {
-  const a = bs[i], b = bs[j];
-  return i !== j && a.length > 0 && b.length < CAP && (b.length === 0 || topColor(b) === topColor(a));
+// 같은 색이 정확히 4칸씩 모여 있으면 정리된 병
+function isSorted(b) {
+  for (let k = 0; k < b.length; k += CAP)
+    for (let m = k; m < k + CAP; m++) if (b[m] !== b[k]) return false;
+  return true;
 }
-function doPour(bs, i, j) {
-  const n = Math.min(topRun(bs[i]), CAP - bs[j].length);
+const isDone = (b, cap) => b.length === cap && isSorted(b);
+function canPour(bs, caps, i, j) {
+  const a = bs[i], b = bs[j];
+  return i !== j && a.length > 0 && b.length < caps[j] && (b.length === 0 || topColor(b) === topColor(a));
+}
+function doPour(bs, caps, i, j) {
+  const n = Math.min(topRun(bs[i]), caps[j] - bs[j].length);
   for (let k = 0; k < n; k++) bs[j].push(bs[i].pop());
   return n;
 }
-const isWin = bs => bs.every(b => b.length === 0 || isFull(b));
-function anyMove(bs) {
+const isWin = bs => bs.every(isSorted);
+function anyMove(bs, caps) {
   for (let i = 0; i < bs.length; i++)
     for (let j = 0; j < bs.length; j++)
-      if (canPour(bs, i, j) && !isFull(bs[i])) return true;
+      if (canPour(bs, caps, i, j) && !isDone(bs[i], caps[i])) return true;
   return false;
 }
 
@@ -261,23 +336,23 @@ function rng(seed) {
 const colorsFor = level => Math.min(COLORS.length, 3 + Math.floor(level * 0.6));
 
 // 깊이 우선 탐색으로 풀 수 있는 퍼즐인지 확인
-function solvable(start, limit = 150000) {
+function solvable(start, caps, limit = 150000) {
   const seen = new Set();
   const stack = [clone(start)];
   while (stack.length) {
     const s = stack.pop();
     if (isWin(s)) return true;
-    const key = s.map(b => b.join(',')).sort().join('|');
+    const key = s.map((b, i) => caps[i] + ':' + b.join(',')).sort().join('|');
     if (seen.has(key)) continue;
     seen.add(key);
     if (seen.size > limit) return false;
     for (let i = 0; i < s.length; i++) {
-      if (isFull(s[i])) continue;
+      if (isDone(s[i], caps[i])) continue;
       for (let j = 0; j < s.length; j++) {
-        if (!canPour(s, i, j)) continue;
+        if (!canPour(s, caps, i, j)) continue;
         if (s[j].length === 0 && topRun(s[i]) === s[i].length) continue; // 의미 없는 이동
         const ns = clone(s);
-        doPour(ns, i, j);
+        doPour(ns, caps, i, j);
         stack.push(ns);
       }
     }
@@ -287,8 +362,9 @@ function solvable(start, limit = 150000) {
 
 function generate(level) {
   const n = colorsFor(level);
-  let bs = null;
-  for (let attempt = 0; attempt < 40; attempt++) {
+  const long = level >= LONG_FROM;
+  let last = null;
+  for (let attempt = 0; attempt < 60; attempt++) {
     const r = rng(level * 7919 + attempt);
     const pool = [];
     for (let c = 0; c < n; c++) for (let k = 0; k < CAP; k++) pool.push(c);
@@ -296,26 +372,32 @@ function generate(level) {
       const j = Math.floor(r() * (i + 1));
       [pool[i], pool[j]] = [pool[j], pool[i]];
     }
-    bs = [];
-    for (let i = 0; i < n; i++) bs.push(pool.slice(i * CAP, (i + 1) * CAP));
-    if (bs.some(isFull)) continue;
-    bs.push([], []);
-    if (solvable(bs)) return bs;
+    const bottles = [];
+    for (let i = 0; i < n; i++) bottles.push(pool.slice(i * CAP, (i + 1) * CAP));
+    if (bottles.some(b => isDone(b, CAP))) continue;
+    const caps = bottles.map(() => CAP);
+    // 긴 막대 레벨은 빈 병 1개 + 긴 막대 (못 풀면 빈 병 2개로)
+    const empties = long && attempt < 30 ? 1 : 2;
+    for (let k = 0; k < empties; k++) { bottles.push([]); caps.push(CAP); }
+    if (long) { bottles.push([]); caps.push(LONG_CAP); }
+    last = { bottles, caps };
+    if (solvable(bottles, caps)) return last;
   }
-  return bs;
+  return last;
 }
 
 // ---------- 그리기 ----------
-function layout(count) {
+function layout(count, hasLong) {
   const W = Math.min(window.innerWidth, 560) - 32;
-  const H = window.innerHeight - 230;
+  const H = window.innerHeight - 240;
   const perRow = count <= 5 ? count : count <= 12 ? Math.ceil(count / 2) : Math.ceil(count / 3);
   const rows = Math.ceil(count / perRow);
   const gap = Math.max(10, Math.min(22, W / perRow * 0.28));
   let bw = Math.min(60, (W - gap * perRow) / perRow);
   let bh = bw * 3.1;
-  const rowgap = 34;
-  const maxBh = (H - rowgap * rows) / rows;
+  const rowgap = 30;
+  // 긴 막대가 있는 줄은 일반 병보다 0.84배 더 높아요
+  const maxBh = (H - (rowgap + bw * 0.3) * rows) / (rows + (hasLong ? 0.84 : 0));
   if (bh > maxBh) { bh = maxBh; bw = bh / 3.1; }
   const board = $('board');
   board.style.setProperty('--bw', bw + 'px');
@@ -325,26 +407,27 @@ function layout(count) {
   board.style.maxWidth = perRow * (bw + gap) + 'px';
 }
 
-function makeBottle(colors) {
+function makeBottle(colors, cap = CAP) {
   const el = document.createElement('div');
-  el.className = 'bottle';
-  el.innerHTML = '<div class="cork"></div><div class="glass"><div class="liquid"></div></div>';
-  paintEl(el, colors, 0);
+  el.className = 'bottle' + (cap > CAP ? ' long' : '');
+  el.style.setProperty('--cap', cap);
+  el.innerHTML = '<div class="cork"></div><div class="glass"><div class="liquid"></div></div><div class="rim"></div>';
+  paintEl(el, colors, cap, 0);
   return el;
 }
-function paintEl(el, b, fresh) {
+function paintEl(el, b, cap, fresh) {
   el.querySelector('.liquid').innerHTML = b.map((c, k) =>
-    `<div class="seg${k >= b.length - fresh ? ' grow' : ''}" style="background-color:${COLORS[c]}"></div>`).join('');
-  el.classList.toggle('done', isFull(b));
+    `<div class="seg${k >= b.length - fresh ? ' grow' : ''}" style="--c:${COLORS[c]}"></div>`).join('');
+  el.classList.toggle('done', isDone(b, cap));
 }
-function paint(i, fresh = 0) { paintEl(bottleEls[i], S.bottles[i], fresh); }
+function paint(i, fresh = 0) { paintEl(bottleEls[i], S.bottles[i], S.caps[i], fresh); }
 
 function build() {
   const board = $('board');
   board.innerHTML = '';
-  layout(S.bottles.length);
+  layout(S.bottles.length, S.caps.some(c => c > CAP));
   bottleEls = S.bottles.map((b, i) => {
-    const el = makeBottle(b);
+    const el = makeBottle(b, S.caps[i]);
     el.addEventListener('click', () => tap(i));
     board.appendChild(el);
     return el;
@@ -391,7 +474,7 @@ async function animatePour(i, j, color, midway) {
 
   const stream = document.createElement('div');
   stream.className = 'stream';
-  stream.style.background = COLORS[color];
+  stream.style.backgroundColor = COLORS[color];
   stream.style.left = b.left + b.width / 2 - 3.5 + 'px';
   stream.style.top = b.top - 10 + 'px';
   stream.style.height = b.height * 0.8 + 'px';
@@ -425,7 +508,7 @@ async function tap(i) {
   if (S.sel === i) { S.sel = -1; markSel(); return; }
 
   const from = S.sel;
-  if (!canPour(S.bottles, from, i)) {
+  if (!canPour(S.bottles, S.caps, from, i)) {
     shake(i);
     // 다른 병을 고른 것으로 처리
     S.sel = S.bottles[i].length ? i : -1;
@@ -439,7 +522,7 @@ async function tap(i) {
   hideHand();
   const color = topColor(S.bottles[from]);
   await animatePour(from, i, color, () => {
-    const n = doPour(S.bottles, from, i);
+    const n = doPour(S.bottles, S.caps, from, i);
     paint(from);
     paint(i, n);
   });
@@ -449,7 +532,7 @@ async function tap(i) {
   hud();
 
   if (isWin(S.bottles)) { await wait(350); win(); return; }
-  if (!anyMove(S.bottles)) toast('더 이상 옮길 수 있는 물이 없어요. 되돌리기나 빈 병 추가를 써 보세요!');
+  if (!anyMove(S.bottles, S.caps)) toast('더 이상 옮길 수 있는 물이 없어요. 되돌리기나 빈 병 추가를 써 보세요!');
   tutAdvance();
 }
 
@@ -469,9 +552,14 @@ function startLevel(level) {
   hideHand();
   show('game');
   build();
+  if (level >= LONG_FROM && !load('colorsort-long-seen', false)) {
+    save('colorsort-long-seen', true);
+    $('longOverlay').classList.add('on');
+  }
 }
 function resetBoard() {
-  S.bottles = clone(S.initial);
+  S.bottles = clone(S.initial.bottles);
+  S.caps = S.initial.caps.slice();
   S.history = [];
   S.sel = -1;
   S.moves = 0;
@@ -489,7 +577,9 @@ function win() {
     save('colorsort-level', S.level + 1);
     $('winEmoji').textContent = '🎉';
     $('winTitle').textContent = `레벨 ${S.level} 클리어!`;
-    $('winSub').textContent = `${S.moves}번 이동으로 완성했어요.`;
+    $('winSub').textContent = S.level + 1 === LONG_FROM
+      ? `${S.moves}번 이동으로 완성했어요. 다음 레벨부터 긴 막대가 나와요!`
+      : `${S.moves}번 이동으로 완성했어요.`;
     $('winNext').textContent = '다음 레벨 ▶';
   }
   $('winOverlay').classList.add('on');
@@ -512,7 +602,7 @@ function startTutorial() {
   $('howOverlay').classList.remove('on');
   S.mode = 'tut';
   S.tutStep = 0;
-  S.initial = clone(TUT.bottles);
+  S.initial = { bottles: clone(TUT.bottles), caps: TUT.bottles.map(() => CAP) };
   resetBoard();
   $('tools').classList.add('hidden');
   $('tutBubble').classList.add('on');
@@ -546,14 +636,17 @@ function refreshMenu() {
   $('btnPlay').textContent = lv > 1 ? `▶ 이어하기 (레벨 ${lv})` : '▶ 플레이';
   $('menuHint').textContent = load('colorsort-tutorial-done', false) ? '' : '처음이라면 🎓 튜토리얼부터 해 보세요!';
 }
-function menuDecor() {
-  const box = $('menuBottles');
-  box.style.setProperty('--bw', '40px');
-  box.style.setProperty('--bh', '124px');
+function decorate(box, bw, bh, list) {
+  box.style.setProperty('--bw', bw + 'px');
+  box.style.setProperty('--bh', bh + 'px');
   box.style.setProperty('--gap', '0px');
   box.style.setProperty('--rowgap', '0px');
-  [[0, 0, 0, 0], [6, 2, 6, 7], [8, 3, 5, 1], [7, 7, 7, 7]].forEach(b => box.appendChild(makeBottle(b)));
+  list.forEach(([b, cap]) => box.appendChild(makeBottle(b, cap)));
 }
+decorate($('menuBottles'), 40, 104,
+  [[[0, 0, 0, 0]], [[6, 2, 6, 7]], [[8, 3, 5, 1, 9, 9], LONG_CAP], [[3, 5, 8, 2]], [[7, 7, 7, 7]]]);
+decorate($('longArt'), 34, 80,
+  [[[2, 5, 0, 7]], [[1, 1, 3, 6, 6, 8], LONG_CAP], [[4]]]);
 
 // ---------- 버튼 ----------
 $('btnPlay').onclick = () => startLevel(load('colorsort-level', 1));
@@ -561,6 +654,7 @@ $('btnHow').onclick = () => $('howOverlay').classList.add('on');
 $('btnTut').onclick = startTutorial;
 $('howTut').onclick = startTutorial;
 $('howClose').onclick = () => $('howOverlay').classList.remove('on');
+$('longOk').onclick = () => $('longOverlay').classList.remove('on');
 $('btnHelp').onclick = () => $('howOverlay').classList.add('on');
 $('btnHome').onclick = () => { if (!S.busy) show('menu'); };
 
@@ -582,6 +676,7 @@ $('btnAdd').onclick = () => {
   if (S.busy || S.extraUsed) return;
   S.extraUsed = true;
   S.bottles.push([]);
+  S.caps.push(CAP);
   S.history.forEach(h => h.push([]));
   S.sel = -1;
   build();
@@ -599,11 +694,10 @@ $('winMenu').onclick = () => {
 
 window.addEventListener('resize', () => {
   if (!$('game').classList.contains('on')) return;
-  layout(S.bottles.length);
+  layout(S.bottles.length, S.caps.some(c => c > CAP));
   if (S.mode === 'tut' && TUT.steps[S.tutStep]) placeHand(TUT.steps[S.tutStep].t);
 });
 
-menuDecor();
 refreshMenu();
 </script>
 </body>
